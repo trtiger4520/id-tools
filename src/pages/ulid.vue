@@ -47,7 +47,7 @@
 import id128 from 'id128';
 import { CopyTextToClipboard } from '../utils/copy';
 
-const { Ulid, Uuid4 } = id128;
+const { Ulid, Uuid } = id128;
 
 const ulid = ref<string>('');
 const guid = ref<string>('');
@@ -58,7 +58,7 @@ const submit = (event: Event) => {
 const generateNew = () => {
   const id = Ulid.generate();
   ulid.value = id.toCanonical();
-  guid.value = Uuid4.fromRaw(id.toRaw()).toCanonical();
+  guid.value = Uuid.fromRaw(id.toRaw()).toCanonical();
 };
 
 onMounted(() => {
