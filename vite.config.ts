@@ -8,7 +8,7 @@ import { VueRouterAutoImports } from 'unplugin-vue-router';
 
 export default defineConfig({
   build: {
-    outDir: 'github-pages',
+    outDir: 'docs',
   },
   plugins: [
     Components(),
