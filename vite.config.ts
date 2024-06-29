@@ -7,6 +7,7 @@ import vue from '@vitejs/plugin-vue';
 import { VueRouterAutoImports } from 'unplugin-vue-router';
 
 export default defineConfig({
+  base: '/id-tools/',
   build: {
     outDir: 'docs',
   },

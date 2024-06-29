@@ -1,0 +1,1 @@
+import{_ as c,c as s,a as e,e as t,f as n,g as l,o as _,h as a}from"./app-BiKxNSSa.js";const u={};function i(d,f){const o=l("router-link"),r=l("RouterView");return _(),s("div",null,[e("ul",null,[e("li",null,[t(o,{to:"/"},{default:n(()=>[a("Home")]),_:1})]),e("li",null,[t(o,{to:"/ulid"},{default:n(()=>[a("Ulid")]),_:1})])]),t(r)])}const p=c(u,[["render",i]]);export{p as default};
