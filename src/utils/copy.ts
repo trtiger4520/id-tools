@@ -11,8 +11,9 @@ const FallbackCopyTextToClipboard = (text: string) => {
 
   try {
     const successful = document.execCommand('copy');
-    const msg = successful ? 'successful' : 'unsuccessful';
-    console.log('Fallback: Copying text command was ' + msg);
+    if (!successful) {
+      throw new Error('Oops, unable to copy');
+    }
   } catch (err) {
     console.error('Fallback: Oops, unable to copy', err);
   }
