@@ -13,3 +13,7 @@
 .copy-btn {
   margin-left: 8px;
 }
+
+textarea {
+  resize: vertical;
+}
