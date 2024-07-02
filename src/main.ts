@@ -1,5 +1,6 @@
 import { ViteSSG } from 'vite-ssg';
 import App from './App.vue';
+import 'virtual:uno.css';
 import './styles.css';
 
 import { routes } from './routers';
