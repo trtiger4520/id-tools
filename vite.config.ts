@@ -5,16 +5,23 @@ import Components from 'unplugin-vue-components/vite';
 import Layouts from 'vite-plugin-vue-layouts';
 import vue from '@vitejs/plugin-vue';
 import { VueRouterAutoImports } from 'unplugin-vue-router';
+import UnoCSS from 'unocss/vite';
 
 export default defineConfig({
   base: '/id-tools/',
   build: {
     outDir: 'docs',
   },
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
   plugins: [
     Components(),
     VueRouter(),
     vue(),
+    UnoCSS(),
     Layouts(),
     AutoImport({
       imports: ['vue', VueRouterAutoImports],

@@ -1,7 +1,7 @@
 {
   "name": "id-tools",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@unocss/reset": "^0.61.0",
     "id128": "^1.6.6",
     "vite-plugin-vue-layouts": "^0.11.0",
     "vue": "^3.4.29"
@@ -16,6 +17,8 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.10.3",
     "@unhead/vue": "^1.9.14",
+    "@unocss/preset-typography": "^0.61.0",
+    "@unocss/preset-uno": "^0.61.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
@@ -24,6 +27,7 @@
     "prettier": "^3.3.2",
     "prettier-eslint": "^16.3.0",
     "typescript": "^5.2.2",
+    "unocss": "^0.61.0",
     "unplugin-auto-import": "^0.17.6",
     "unplugin-vue-components": "^0.27.2",
     "unplugin-vue-router": "^0.10.0",
