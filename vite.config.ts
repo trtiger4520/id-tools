@@ -12,6 +12,11 @@ export default defineConfig({
   build: {
     outDir: 'docs',
   },
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
   plugins: [
     Components(),
     VueRouter(),
