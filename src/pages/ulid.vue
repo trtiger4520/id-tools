@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="p-sm">
     <h1>Ulid</h1>
-    <form @submit="submit">
+    <form @submit="Submit">
       <div>
         <label for="count">Count: </label>
         <input
@@ -21,17 +21,18 @@
         <button
           class="copy-btn"
           type="button"
-          @click="CopyTextToClipboard(ulid)"
+          @click="CopyTextToClipboard(ulidContent)"
         >
           copy
         </button>
         <br />
         <textarea
           id="ulid"
-          v-model="ulid"
+          v-model="ulidContent"
           name="ulid"
           class="id-input"
-          readonly
+          rows="10"
+          @change.prevent="ConvertToGuid"
         />
       </div>
       <div>
@@ -39,16 +40,18 @@
         <button
           class="copy-btn"
           type="button"
-          @click="CopyTextToClipboard(guid)"
+          @click="CopyTextToClipboard(guidContent)"
         >
           copy
         </button>
         <br />
         <textarea
           id="guid"
-          v-model="guid"
+          v-model="guidContent"
           name="guid"
           class="id-input"
+          rows="10"
+          @change.prevent="ConvertToUlid"
         />
       </div>
     </form>
@@ -57,28 +60,29 @@
 
 <script lang="ts" setup>
 import id128 from 'id128';
-import { CopyTextToClipboard } from '../utils/copy';
+import { CopyTextToClipboard } from '@/utils/copy';
+import { RegexDefinitions } from '@/utils/regex';
 
 const { Ulid, Uuid } = id128;
 
 const count = ref(1);
 
-const ulid = ref<string>('');
-const guid = ref<string>('');
+const ulidContent = ref<string>('');
+const guidContent = ref<string>('');
 
-const submit = (event: Event) => {
+const Submit = (event: Event) => {
   event.preventDefault();
-  generate();
+  Generate();
 };
 
-const generate = () => {
-  const results = new Array(count.value).fill(null).map(() => generateNew());
+const Generate = () => {
+  const results = new Array(count.value).fill(null).map(() => GenerateNew());
 
-  ulid.value = results.map((result) => result.ulid).join('\n');
-  guid.value = results.map((result) => result.guid).join('\n');
+  ulidContent.value = results.map((result) => result.ulid).join('\n');
+  guidContent.value = results.map((result) => result.guid).join('\n');
 };
 
-const generateNew = () => {
+const GenerateNew = () => {
   const id = Ulid.generate();
   const ulid = id.toCanonical();
   const guid = Uuid.fromRaw(id.toRaw()).toCanonical();
@@ -89,9 +93,51 @@ const generateNew = () => {
   };
 };
 
-watch(count, () => generate());
+const ConvertToUlid = () => {
+  const results = [] as string[];
+  const parsedList = guidContent.value.match(new RegExp(RegexDefinitions.GUID, 'gim'));
+
+  if (!parsedList) {
+    return;
+  }
+
+  for (const parsed of parsedList) {
+    try {
+      const guid = Uuid.fromCanonical(parsed);
+      const ulid = Ulid.fromRaw(guid.toRaw()).toCanonical();
+      results.push(ulid);
+    } catch (error) {
+      continue;
+    }
+  }
+
+  ulidContent.value = results.join('\n');
+};
+
+const ConvertToGuid = () => {
+  const results = [] as string[];
+  const parsedList = ulidContent.value.match(new RegExp(RegexDefinitions.ULID, 'gim'));
+
+  if (!parsedList) {
+    return;
+  }
+
+  for (const parsed of parsedList) {
+    try {
+      const ulid = Ulid.fromCanonical(parsed);
+      const guid = Uuid.fromRaw(ulid.toRaw()).toCanonical();
+      results.push(guid);
+    } catch (error) {
+      continue;
+    }
+  }
+
+  guidContent.value = results.join('\n');
+};
+
+watch(count, () => Generate());
 
 onMounted(() => {
-  generate();
+  Generate();
 });
 </script>
