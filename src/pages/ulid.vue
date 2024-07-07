@@ -110,11 +110,12 @@
 import id128 from 'id128';
 import { RegexDefinitions } from '@/utils/regex';
 import { debounce } from 'lodash';
+import { useStorage } from '@vueuse/core';
 
 const { Ulid, Uuid } = id128;
 
-const count = ref(1);
-const autoConvert = ref(true);
+const count = useStorage('generate-count', 1);
+const autoConvert = useStorage('enable-auto-convert', true);
 
 const ulidContent = ref<string>('');
 const guidContent = ref<string>('');
