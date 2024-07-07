@@ -6,7 +6,7 @@
         @submit="Submit"
         @reset="Reset"
       >
-        <div class="inline-block mr-3">
+        <div class="mr-3 inline-block">
           <label for="count">Count: </label>
           <input
             id="count"
@@ -38,7 +38,7 @@
       </form>
     </div>
     <div class="mb-lg">
-      <div class="flex justify-between items-start">
+      <div class="flex items-start justify-between">
         <label
           for="ulid"
           class="text-xl"
@@ -71,7 +71,7 @@
       </div>
     </div>
     <div>
-      <div class="flex justify-between items-start">
+      <div class="flex items-start justify-between">
         <label
           for="guid"
           class="text-xl"
@@ -109,7 +109,7 @@
 <script lang="ts" setup>
 import id128 from 'id128';
 import { RegexDefinitions } from '@/utils/regex';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { useStorage } from '@vueuse/core';
 
 const { Ulid, Uuid } = id128;

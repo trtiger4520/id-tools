@@ -18,7 +18,7 @@
 </template>
 <script lang="ts" setup>
 import { CopyTextToClipboard } from '@/utils/copy';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 const props = defineProps<{
   text: string;
