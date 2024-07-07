@@ -1,71 +1,121 @@
 <template>
   <div class="p-sm">
-    <h1>Ulid</h1>
-    <form @submit="Submit">
-      <div>
-        <label for="count">Count: </label>
-        <input
-          id="count"
-          v-model="count"
-          type="number"
-          name="count"
-          min="1"
-          max="100"
-        />
-      </div>
-      <br />
-      <button type="submit">Generate ID(s)</button>
-      <hr />
-      <div>
-        <label for="ulid">ULID</label>
+    <h1 class="mt-none">Ulid</h1>
+    <div class="mb-sm">
+      <form
+        @submit="Submit"
+        @reset="Reset"
+      >
+        <div class="mr-3 inline-block">
+          <label for="count">Count: </label>
+          <input
+            id="count"
+            v-model="count"
+            type="number"
+            name="count"
+            min="1"
+            max="100"
+          />
+        </div>
+        <button type="submit">Generate ID(s)</button>
         <button
-          class="copy-btn"
-          type="button"
-          @click="CopyTextToClipboard(ulidContent)"
+          type="reset"
+          class="ml-3"
         >
-          copy
+          Reset
         </button>
-        <br />
-        <textarea
-          id="ulid"
-          v-model="ulidContent"
-          name="ulid"
-          class="id-input"
-          rows="10"
-          @change.prevent="ConvertToGuid"
-        />
+        <span class="mx-3">|</span>
+        <div class="inline-block">
+          <input
+            id="autoConvert"
+            v-model="autoConvert"
+            type="checkbox"
+            name="autoConvert"
+            class="mr-1"
+          />
+          <label for="autoConvert">Auto Convert</label>
+        </div>
+      </form>
+    </div>
+    <div class="mb-lg">
+      <div class="flex items-start justify-between">
+        <label
+          for="ulid"
+          class="text-xl"
+          >ULID</label
+        >
+        <div class="space-x-sm">
+          <button @click="() => (ulidContent = '')">
+            <i class="i-material-symbols-close"></i>
+            CLEAR
+          </button>
+          <CopyBtn :text="ulidContent" />
+        </div>
       </div>
+      <textarea
+        id="ulid"
+        v-model="ulidContent"
+        name="ulid"
+        class="id-input"
+        rows="10"
+        @input="OnUlidTextAreaInput"
+      />
       <div>
-        <label for="guid">GUID</label>
         <button
-          class="copy-btn"
-          type="button"
-          @click="CopyTextToClipboard(guidContent)"
+          :disabled="autoConvert"
+          :title="autoConvert ? 'auto convert is enabled' : undefined"
+          @click="ConvertToGuid"
         >
-          copy
+          Convert to GUID
         </button>
-        <br />
-        <textarea
-          id="guid"
-          v-model="guidContent"
-          name="guid"
-          class="id-input"
-          rows="10"
-          @change.prevent="ConvertToUlid"
-        />
       </div>
-    </form>
+    </div>
+    <div>
+      <div class="flex items-start justify-between">
+        <label
+          for="guid"
+          class="text-xl"
+          >GUID</label
+        >
+        <div class="space-x-sm">
+          <button @click="() => (guidContent = '')">
+            <i class="i-material-symbols-close"></i>
+            CLEAR
+          </button>
+          <CopyBtn :text="guidContent" />
+        </div>
+      </div>
+      <textarea
+        id="guid"
+        v-model="guidContent"
+        name="guid"
+        class="id-input"
+        rows="10"
+        @input="OnGuidTextAreaInput"
+      />
+      <div>
+        <button
+          :disabled="autoConvert"
+          :title="autoConvert ? 'auto convert is enabled' : undefined"
+          @click="ConvertToUlid"
+        >
+          Convert to ULID
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import id128 from 'id128';
-import { CopyTextToClipboard } from '@/utils/copy';
 import { RegexDefinitions } from '@/utils/regex';
+import debounce from 'lodash/debounce';
+import { useStorage } from '@vueuse/core';
 
 const { Ulid, Uuid } = id128;
 
-const count = ref(1);
+const count = useStorage('generate-count', 1);
+const autoConvert = useStorage('enable-auto-convert', true);
 
 const ulidContent = ref<string>('');
 const guidContent = ref<string>('');
@@ -73,6 +123,13 @@ const guidContent = ref<string>('');
 const Submit = (event: Event) => {
   event.preventDefault();
   Generate();
+};
+
+const Reset = (event: Event) => {
+  event.preventDefault();
+  count.value = 1;
+  ulidContent.value = '';
+  guidContent.value = '';
 };
 
 const Generate = () => {
@@ -92,6 +149,32 @@ const GenerateNew = () => {
     guid,
   };
 };
+
+const OnUlidTextAreaInput = (ev: Event) => {
+  ev.preventDefault();
+  if (!autoConvert.value) {
+    return;
+  }
+
+  DebounceConvertToGuid();
+};
+
+const OnGuidTextAreaInput = (ev: Event) => {
+  ev.preventDefault();
+  if (!autoConvert.value) {
+    return;
+  }
+
+  DebounceConvertToUlid();
+};
+
+const DebounceConvertToGuid = debounce(() => {
+  ConvertToGuid();
+}, 300);
+
+const DebounceConvertToUlid = debounce(() => {
+  ConvertToUlid();
+}, 300);
 
 const ConvertToUlid = () => {
   const results = [] as string[];

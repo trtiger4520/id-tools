@@ -1,7 +1,14 @@
-import { defineConfig } from 'unocss';
-import presetUno from '@unocss/preset-uno';
-import presetTypography from '@unocss/preset-typography';
+import { defineConfig, presetUno, presetIcons, presetTypography } from 'unocss';
 
 export default defineConfig({
-  presets: [presetUno(), presetTypography()],
+  presets: [
+    presetUno(),
+    presetTypography(),
+    presetIcons({
+      extraProperties: {
+        display: 'inline-block',
+        'vertical-align': 'middle',
+      },
+    }),
+  ],
 });

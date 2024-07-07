@@ -9,22 +9,25 @@ const FallbackCopyTextToClipboard = (text: string) => {
   textArea.focus();
   textArea.select();
 
-  try {
-    const successful = document.execCommand('copy');
-    if (!successful) {
-      throw new Error('Oops, unable to copy');
-    }
-  } catch (err) {
-    console.error('Fallback: Oops, unable to copy', err);
+  if (!document.execCommand('copy')) {
+    throw new Error('Oops, unable to copy');
   }
 
   document.body.removeChild(textArea);
 };
 
-export const CopyTextToClipboard = (text: string) => {
-  if (!navigator.clipboard) {
-    FallbackCopyTextToClipboard(text);
-    return;
+export const CopyTextToClipboard = async (text: string) => {
+  try {
+    if (!navigator.clipboard) {
+      FallbackCopyTextToClipboard(text);
+      return true;
+    }
+
+    await navigator.clipboard.writeText(text);
+
+    return true;
+  } catch (error) {
+    console.error('Failed to copy text to clipboard', error);
+    return false;
   }
-  navigator.clipboard.writeText(text);
 };

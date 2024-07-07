@@ -10,6 +10,7 @@ module.exports = defineConfig({
     'eslint:recommended',
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier/skip-formatting',
+    '@unocss',
   ],
   parserOptions: {
     ecmaVersion: 'latest',

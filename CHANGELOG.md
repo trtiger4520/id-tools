@@ -1,3 +1,20 @@
+## <small>1.1.0 (2024-07-07)</small>
+
+### Features
+
+* feat: Ulid - add auto convert check box can manual input convert
+* feat: Ulid - add reset and clear button
+* feat: Ulid - copy button add success state
+
+### Chores
+
+* chore: save setting to storage
+* chore: add uno.css icon and eslint config
+
+### Fix
+
+* fix: change auto convert use `change` event to `input` event
+
 ## <small>1.0.0 (2024-07-04)</small>
 
 ### Features
