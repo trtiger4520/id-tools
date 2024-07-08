@@ -1,5 +1,5 @@
 <template>
-  <div class="p-sm">
+  <Container>
     <h1 class="mt-none">Ulid</h1>
     <div class="mb-sm">
       <form
@@ -17,13 +17,15 @@
             max="100"
           />
         </div>
-        <button type="submit">Generate ID(s)</button>
-        <button
+        <Button
+          type="submit"
+          text="Generate ID(s)"
+        />
+        <Button
           type="reset"
           class="ml-3"
-        >
-          Reset
-        </button>
+          text="Reset"
+        />
         <span class="mx-3">|</span>
         <div class="inline-block">
           <input
@@ -38,19 +40,19 @@
       </form>
     </div>
     <div class="mb-lg">
-      <div class="flex items-start justify-between">
+      <div class="flex items-center space-x-sm">
         <label
           for="ulid"
           class="text-xl"
           >ULID</label
         >
-        <div class="space-x-sm">
-          <button @click="() => (ulidContent = '')">
-            <i class="i-material-symbols-close"></i>
-            CLEAR
-          </button>
-          <CopyBtn :text="ulidContent" />
-        </div>
+        <CopyBtn :text="ulidContent" />
+        <div class="flex-1" />
+        <Button
+          icon="i-material-symbols-close"
+          text="CLEAR"
+          @click="() => (ulidContent = '')"
+        />
       </div>
       <textarea
         id="ulid"
@@ -61,29 +63,28 @@
         @input="OnUlidTextAreaInput"
       />
       <div>
-        <button
+        <Button
           :disabled="autoConvert"
           :title="autoConvert ? 'auto convert is enabled' : undefined"
           @click="ConvertToGuid"
-        >
-          Convert to GUID
-        </button>
+          text="Convert to ULID"
+        />
       </div>
     </div>
     <div>
-      <div class="flex items-start justify-between">
+      <div class="flex items-center space-x-sm">
         <label
           for="guid"
           class="text-xl"
           >GUID</label
         >
-        <div class="space-x-sm">
-          <button @click="() => (guidContent = '')">
-            <i class="i-material-symbols-close"></i>
-            CLEAR
-          </button>
-          <CopyBtn :text="guidContent" />
-        </div>
+        <CopyBtn :text="guidContent" />
+        <div class="flex-1" />
+        <Button
+          icon="i-material-symbols-close"
+          text="CLEAR"
+          @click="() => (guidContent = '')"
+        />
       </div>
       <textarea
         id="guid"
@@ -94,16 +95,15 @@
         @input="OnGuidTextAreaInput"
       />
       <div>
-        <button
+        <Button
           :disabled="autoConvert"
           :title="autoConvert ? 'auto convert is enabled' : undefined"
           @click="ConvertToUlid"
-        >
-          Convert to ULID
-        </button>
+          text="Convert to ULID"
+        />
       </div>
     </div>
-  </div>
+  </Container>
 </template>
 
 <script lang="ts" setup>
@@ -111,6 +111,7 @@ import id128 from 'id128';
 import { RegexDefinitions } from '@/utils/regex';
 import debounce from 'lodash/debounce';
 import { useStorage } from '@vueuse/core';
+import Button from '@/components/Button.vue';
 
 const { Ulid, Uuid } = id128;
 

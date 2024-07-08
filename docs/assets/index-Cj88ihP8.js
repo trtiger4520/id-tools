@@ -1,0 +1,1 @@
+import{_ as e,o,c as s,a as c}from"./app-DKaxLWKv.js";const t={},n={class:"p-md"},_=c("h1",null,"Home",-1),a=[_];function r(d,i){return o(),s("div",n,a)}const f=e(t,[["render",r]]);export{f as default};

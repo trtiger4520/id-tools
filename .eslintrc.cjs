@@ -5,6 +5,7 @@ require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = defineConfig({
   root: true,
+  configFile: './uno.config.ts',
   extends: [
     'plugin:vue/vue3-recommended',
     'eslint:recommended',

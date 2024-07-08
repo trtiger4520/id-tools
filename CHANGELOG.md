@@ -1,3 +1,14 @@
+## <small>1.1.1 (2024-07-08)</small>
+
+### Refactor
+
+* refactor: Ulid - Change the copy button to be closer to the label
+* refactor: Ulid - Add Container and Button components
+
+### Fix
+
+* fix: uno.css eslint now found config file.
+
 ## <small>1.1.0 (2024-07-07)</small>
 
 ### Features
